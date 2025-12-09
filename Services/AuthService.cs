@@ -5,6 +5,7 @@ using ShopEasyApi.Entities;
 using ShopEasyApi.Repositories;
 using ShopEasyApi.Exceptions;
 using System.Security.Claims;
+using ShopEasyApi.Enums;
 
 namespace ShopEasyApi.Services
 {
@@ -21,7 +22,7 @@ namespace ShopEasyApi.Services
             _jwtService = jwtService;
         }
 
-        public async Task<UserDto> CreateUserAsync(UserRegisterRequestDto requestDto)
+        public async Task<UserDto> CreateUserAsync(UserRegisterRequestDto requestDto, UserRole role)
         {
             if (await _authRepository.EmailExistsAsync(requestDto.Email!) || await _authRepository.UserNameExistsAsync(requestDto.UserName!)) 
             {
@@ -29,6 +30,7 @@ namespace ShopEasyApi.Services
             }
 
             var appUser = _mapper.Map<AppUser>(requestDto);
+            appUser.Role = role;
             appUser.HashPassword = new PasswordHasher<AppUser>().HashPassword(appUser, requestDto.Password!);
 
             var savedUser = await _authRepository.CreateUserAsync(appUser);
@@ -50,8 +52,6 @@ namespace ShopEasyApi.Services
             {
                 throw new InvalidUserCredentialException("Invalid Email or Password");
             }
-
-            
 
             string jwtToken = _jwtService.GenerateToken(new[]
                 {

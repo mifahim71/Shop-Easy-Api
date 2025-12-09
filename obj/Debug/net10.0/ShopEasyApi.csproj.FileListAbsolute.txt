@@ -129,3 +129,4 @@ C:\Users\user\OneDrive\Desktop\C#\ShopEasyApi\ShopEasyApi\bin\Debug\net10.0\Micr
 C:\Users\user\OneDrive\Desktop\C#\ShopEasyApi\ShopEasyApi\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\user\OneDrive\Desktop\C#\ShopEasyApi\ShopEasyApi\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\user\OneDrive\Desktop\C#\ShopEasyApi\ShopEasyApi\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\user\OneDrive\Desktop\C#\ShopEasyApi\ShopEasyApi\obj\Debug\net10.0\ShopEasyApi.sourcelink.json

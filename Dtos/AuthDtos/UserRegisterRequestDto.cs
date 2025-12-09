@@ -16,7 +16,5 @@ namespace ShopEasyApi.Dtos.AuthDtos
         [Required]
         [EmailAddress]
         public string? Email { get; set; }
-
-        public UserRole Role { get; set; }
     }
 }
