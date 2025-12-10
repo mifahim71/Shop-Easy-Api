@@ -28,7 +28,11 @@ namespace ShopEasyApi.Repositories
 
         public async Task<AppUser?> GetByEmailAsync(string email) =>
             await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
-        
 
+        public async Task<AppUser?> GetByIdAsync(int id)
+        {
+            var appUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+            return appUser;
+        }
     }
 }

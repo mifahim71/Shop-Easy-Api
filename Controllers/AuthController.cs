@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShopEasyApi.Dtos.AuthDtos;
 using ShopEasyApi.Enums;
 using ShopEasyApi.Services;
+using System.Security.Claims;
 
 namespace ShopEasyApi.Controllers
 {
@@ -53,6 +54,17 @@ namespace ShopEasyApi.Controllers
             }
 
             return await _authService.LoginUserAsync(requestDto);
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<UserDto>> GetUserAsync()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var userDto = await _authService.GetByIdAsync(userId);
+
+            return Ok(userDto);
         }
     }
 }

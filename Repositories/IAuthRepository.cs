@@ -13,5 +13,7 @@ namespace ShopEasyApi.Repositories
 
         Task<AppUser> GetByEmailAsync(string email);
 
+        Task<AppUser> GetByIdAsync(int id);
+
     }
 }

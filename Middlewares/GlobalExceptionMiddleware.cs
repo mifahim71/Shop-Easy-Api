@@ -45,6 +45,11 @@ namespace ShopEasyApi.Middlewares
                     message = ex.Message;
                     break;
 
+                case NotFoundException:
+                    statusCode= HttpStatusCode.NotFound;
+                    message = ex.Message;
+                    break;
+
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     message = ex.Message;

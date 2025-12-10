@@ -38,6 +38,17 @@ namespace ShopEasyApi.Services
             return _mapper.Map<UserDto>(savedUser);
         }
 
+        public async Task<UserDto> GetByIdAsync(int userId)
+        {
+            var appUser = await _authRepository.GetByIdAsync(userId);
+            if (appUser == null) {
+                throw new NotFoundException($"user with id:{userId} not found");
+            }
+
+             var userDto = _mapper.Map<UserDto>(appUser);
+            return userDto;
+        }
+
         public async Task<JwtTokenDto> LoginUserAsync(AuthLoginRequestDto requestDto)
         {
             var user = await _authRepository.GetByEmailAsync(requestDto.Email!);

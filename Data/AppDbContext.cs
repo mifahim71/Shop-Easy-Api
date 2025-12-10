@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopEasyApi.Data.Configurations;
 using ShopEasyApi.Entities;
 
 namespace ShopEasyApi.Data
@@ -19,6 +20,10 @@ namespace ShopEasyApi.Data
 
             modelBuilder.Entity<AppUser>()
                 .Property(u => u.Role).HasConversion<string>();
+
+
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
         }
     }
