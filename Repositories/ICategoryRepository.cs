@@ -9,5 +9,7 @@ namespace ShopEasyApi.Repositories
         Task DeleteCategoryAsync(Category category);
         Task<Category> FindCategoryByIdAsync(int id);
         Task SaveChangesAsync();
+
+        Task<bool> IfExistsById(int id);
     }
 }

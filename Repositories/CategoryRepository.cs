@@ -42,5 +42,10 @@ namespace ShopEasyApi.Repositories
         {
             return await _context.Categories.AsNoTracking().ToListAsync();
         }
+
+        public async Task<bool> IfExistsById(int id)
+        {
+            return await _context.Categories.AnyAsync(c => c.Id == id);
+        }
     }
 }

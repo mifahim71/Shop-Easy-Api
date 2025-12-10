@@ -50,6 +50,11 @@ namespace ShopEasyApi.Middlewares
                     message = ex.Message;
                     break;
 
+                case OperationFailedException:
+                    statusCode= HttpStatusCode.BadRequest;
+                    message = ex.Message;
+                    break;
+
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     message = ex.Message;
