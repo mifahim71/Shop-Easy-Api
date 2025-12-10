@@ -38,5 +38,35 @@ namespace ShopEasyApi.Controllers
             return productDtos;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetProductAsync(int id) 
+        {
+            var productDto = await _productService.GetProductByIdAsync(id);
+            return Ok(productDto);
+        }
+
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            await _productService.DeleteProductByIdAsync(id);
+            return NoContent();
+        }
+
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProductDto>> UpdateProductAsync(int id, [FromBody] UpdateProductRequestDto requestDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _productService.UpdateProductAsync(id, requestDto);
+            return NoContent();            
+        }
+
+
     }
 }
