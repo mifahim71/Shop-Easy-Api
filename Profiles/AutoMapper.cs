@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShopEasyApi.Dtos.AuthDtos;
+using ShopEasyApi.Dtos.CategoryDtos;
 using ShopEasyApi.Entities;
 
 namespace ShopEasyApi.Profiles
@@ -10,6 +11,10 @@ namespace ShopEasyApi.Profiles
         {
             CreateMap<UserRegisterRequestDto, AppUser>();
             CreateMap<AppUser, UserDto>();
+
+
+            CreateMap<CategoryCreateRequestDto, Category>();
+            CreateMap<Category,  CategoryDto>();
         }
     }
 }

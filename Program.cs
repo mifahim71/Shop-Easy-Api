@@ -64,9 +64,11 @@ builder.Services.AddAutoMapper(typeof(Program));
 //services registration
 builder.Services.AddScoped<IAuthService,  AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 //Repository registration
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

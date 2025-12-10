@@ -13,6 +13,10 @@ namespace ShopEasyApi.Data
 
         public DbSet<AppUser> Users { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Product> products { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppUser>()
