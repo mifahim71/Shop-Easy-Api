@@ -61,5 +61,16 @@ namespace ShopEasyApi.Repositories
                 .ToListAsync();
         }
 
+        public async Task<bool> ProductExistsWithStockAsync(int productId, int quantity)
+        {
+            return await _context.Products.AnyAsync(p => p.Id == productId && p.Stock >= quantity);
+        }
+
+        public async Task UpdateStockAsync(int productId, int quantity)
+        {
+            var product = await GetByIdTractingAsync(productId);
+            product!.Stock = product.Stock - quantity;
+            await SaveChangesAsync();
+        }
     }
 }

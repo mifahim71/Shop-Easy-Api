@@ -9,5 +9,6 @@ namespace ShopEasyApi.Entities
         public string? Email { get; set; }
         public string? HashPassword { get; set; }
         public UserRole Role { get; set; }
+        public Cart? Cart { get; set; }
     }
 }

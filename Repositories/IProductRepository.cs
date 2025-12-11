@@ -19,5 +19,7 @@ namespace ShopEasyApi.Repositories
         Task<Product?> GetByIdTractingAsync(int id);
 
         Task<List<Product>> GetProductByPriceRangeAsync(decimal minValue, decimal maxValue);
+        Task<bool> ProductExistsWithStockAsync(int productId, int quantity);
+        Task UpdateStockAsync(int productId, int quantity);
     }
 }

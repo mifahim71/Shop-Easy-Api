@@ -14,12 +14,14 @@ namespace ShopEasyApi.Services
         private readonly IMapper _mapper;
         private readonly IAuthRepository _authRepository;
         private readonly IJwtService _jwtService;
+        private readonly ICartRepository _cartRepository;
 
-        public AuthService(IMapper mapper, IAuthRepository authRepository, IJwtService jwtService)
+        public AuthService(IMapper mapper, IAuthRepository authRepository, IJwtService jwtService, ICartRepository cartRepository)
         {
             _mapper = mapper;
             _authRepository = authRepository;
             _jwtService = jwtService;
+            _cartRepository = cartRepository;
         }
 
         public async Task<UserDto> CreateUserAsync(UserRegisterRequestDto requestDto, UserRole role)
@@ -34,6 +36,8 @@ namespace ShopEasyApi.Services
             appUser.HashPassword = new PasswordHasher<AppUser>().HashPassword(appUser, requestDto.Password!);
 
             var savedUser = await _authRepository.CreateUserAsync(appUser);
+
+            await _cartRepository.CreateCartAsync(new Cart { AppUserId = savedUser.Id});
 
             return _mapper.Map<UserDto>(savedUser);
         }
