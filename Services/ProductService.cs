@@ -97,12 +97,12 @@ namespace ShopEasyApi.Services
             }
 
 
-            if (!String.IsNullOrWhiteSpace(requestDto.Name))
+            if(!String.IsNullOrWhiteSpace(requestDto.Name))
             {
                 product.Name = requestDto.Name;
             }
 
-            if (!String.IsNullOrWhiteSpace(requestDto.Description))
+            if(!String.IsNullOrWhiteSpace(requestDto.Description))
             {
                 product.Description = requestDto.Description;
             }
@@ -112,13 +112,36 @@ namespace ShopEasyApi.Services
                 product.Stock = requestDto.Stock.Value;
             }
 
-
             if(requestDto.Price.HasValue)
             {
                 product.Price = requestDto.Price.Value;
             }
 
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<List<ProductDto>> GetProductByCategoryAsync(int categoryId)
+        {
+            bool IfCategoryExists = await _categoryRepository.IfExistsById(categoryId);
+
+            if (!IfCategoryExists)
+            {
+                throw new NotFoundException($"Category With Id:{categoryId} not exists");
+            }
+
+            var category = await _categoryRepository.FindCategoryWithProductAsync(categoryId);
+
+            var products = category!.Products;
+
+            return _mapper.Map<List<ProductDto>>(products);
+
+        }
+
+
+        public async Task<List<ProductDto>> GetProductByPriceRangeAsync(decimal minValue, decimal maxValue)
+        {
+            var products = await _repository.GetProductByPriceRangeAsync(minValue, maxValue);
+            return _mapper.Map<List<ProductDto>>(products);
         }
     }
 }

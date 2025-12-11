@@ -17,5 +17,7 @@ namespace ShopEasyApi.Repositories
         Task SaveChangesAsync();
 
         Task<Product?> GetByIdTractingAsync(int id);
+
+        Task<List<Product>> GetProductByPriceRangeAsync(decimal minValue, decimal maxValue);
     }
 }

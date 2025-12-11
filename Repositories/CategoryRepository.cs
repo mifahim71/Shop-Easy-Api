@@ -27,6 +27,11 @@ namespace ShopEasyApi.Repositories
             return category;
         }
 
+        public async Task<Category?> FindCategoryWithProductAsync(int categoryId)
+        {
+           return await _context.Categories.AsNoTracking().Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == categoryId);
+        }
+
         public async Task DeleteCategoryAsync(Category category)
         {
             _context.Categories.Remove(category);

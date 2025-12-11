@@ -11,10 +11,12 @@ namespace ShopEasyApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ILogger<ProductController> logger)
         {
             _productService = productService;
+            _logger = logger;
         }
 
         [Authorize(Roles = "ADMIN")]
@@ -32,8 +34,12 @@ namespace ShopEasyApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDto>>> GetAllProductsAsync()
+        public async Task<ActionResult<List<ProductDto>>> GetAllProductsAsync([FromQuery] int? categoryId)
         {
+            if (categoryId.HasValue)
+            {
+                return await _productService.GetProductByCategoryAsync(categoryId.Value);
+            }
             var productDtos = await _productService.GetAllProductsAsync();
             return productDtos;
         }
@@ -68,5 +74,23 @@ namespace ShopEasyApi.Controllers
         }
 
 
+        [HttpGet("price")]
+        public async Task<ActionResult<ProductDto>> GetProductByPriceRangeAsync([FromQuery] decimal? minValue, [FromQuery] decimal? maxValue)
+        {
+            
+            if (!minValue.HasValue)
+            {
+                
+                minValue = 0;
+            }
+            if (!maxValue.HasValue)
+            {
+                
+                maxValue = 1000;
+            }
+
+            List<ProductDto> productDtos = await _productService.GetProductByPriceRangeAsync(minValue.Value, maxValue.Value);
+            return Ok(productDtos);
+        }
     }
 }

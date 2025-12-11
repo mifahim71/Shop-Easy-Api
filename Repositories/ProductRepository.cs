@@ -51,5 +51,15 @@ namespace ShopEasyApi.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<Product>> GetProductByPriceRangeAsync(decimal minValue, decimal maxValue)
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .Where(p => p.Price >= minValue && p.Price <= maxValue)
+                .ToListAsync();
+        }
+
     }
 }
