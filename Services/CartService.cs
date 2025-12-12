@@ -45,14 +45,17 @@ namespace ShopEasyApi.Services
 
         }
 
+        public async Task ClearCartAsync(int appUserId)
+        {
+            var cart = await FindCartByUserIdAsync(appUserId);
+
+            await _cartRepository.ClearCartAsync(cart.Id);
+        }
+
         public async Task<CartDto> GetCartAsync(int appUserId)
         {
 
-            Cart cart =  await _cartRepository.FindCartByUserIdWithItemAsync(appUserId);
-            if (cart == null) 
-            {
-                throw new NotFoundException($"Cart with UserId:{appUserId} not found");
-            }
+            var cart = await FindCartByUserIdAsync(appUserId);
 
             var cartItemDtos = _mapper.Map<List<CartItemDto>>(cart.Items);
 
@@ -62,5 +65,25 @@ namespace ShopEasyApi.Services
                 Items = cartItemDtos
             };
         }
+
+        public async Task DeleteCartByProductIdAsync(int appUserId, int productId)
+        {
+
+            var cart = await FindCartByUserIdAsync(appUserId);
+            
+            await _cartRepository.DeleteCartByProductIdAsync(cart.Id, productId);
+        }
+
+        private async Task<Cart> FindCartByUserIdAsync(int appUserId)
+        {
+            Cart cart = await _cartRepository.FindCartByUserIdWithItemAsync(appUserId);
+            if (cart == null)
+            {
+                throw new NotFoundException($"Cart with UserId:{appUserId} not found");
+            }
+            return cart;
+        }
+
+        
     }
 }

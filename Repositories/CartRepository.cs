@@ -20,10 +20,22 @@ namespace ShopEasyApi.Repositories
             return cartItem;
         }
 
+        public async Task ClearCartAsync(int id)
+        {
+            await _context.CartItems.Where(ci => ci.CartId == id)
+                .ExecuteDeleteAsync();
+        }
+
         public async Task CreateCartAsync(Cart cart)
         {
              _context.Carts.Add(cart);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCartByProductIdAsync(int cartId, int productId)
+        {
+            await _context.CartItems.Where(ci => ci.CartId == cartId && ci.ProductId == productId)
+                .ExecuteDeleteAsync();
         }
 
         public async Task<Cart?> FindCartByUserIdAsync(int appUserId)

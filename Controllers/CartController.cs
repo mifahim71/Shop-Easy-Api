@@ -43,5 +43,29 @@ namespace ShopEasyApi.Controllers
 
             return cartDto;
         }
+
+
+        [Authorize(Roles = "CUSTOMER, ADMIN")]
+        [HttpDelete("clear")]
+        public async Task<IActionResult> ClearCartAsync()
+        {
+            var appUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            await _cartService.ClearCartAsync(appUserId);
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "CUSTOMER, ADMIN")]
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteCartByProductIdAsync(int productId)
+        {
+            var appUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            await _cartService.DeleteCartByProductIdAsync(appUserId, productId);
+
+            return NoContent();
+        }
+
     }
 }
