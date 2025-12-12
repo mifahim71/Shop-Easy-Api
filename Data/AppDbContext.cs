@@ -21,6 +21,10 @@ namespace ShopEasyApi.Data
 
         public DbSet<CartItem> CartItems { get; set; }
 
+        public DbSet<Order> Order { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AppUser>()
