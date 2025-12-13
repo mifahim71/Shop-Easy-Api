@@ -55,6 +55,11 @@ namespace ShopEasyApi.Middlewares
                     message = ex.Message;
                     break;
 
+                case StockOutException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message= ex.Message;
+                    break;
+
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     message = ex.Message;

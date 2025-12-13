@@ -12,5 +12,6 @@ namespace ShopEasyApi.Repositories
         Task<Cart> FindCartByUserIdAsync(int appUserId);
         Task<Cart> FindCartByUserIdWithItemAsync(int appUserId);
         Task SaveChangesAsync();
+        Task updateProductQuantityAsync(CartItem item);
     }
 }

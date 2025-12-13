@@ -48,9 +48,17 @@ namespace ShopEasyApi.Repositories
             return await _context.Carts.AsNoTracking().Include(c => c.Items).FirstOrDefaultAsync(c => c.AppUserId == appUserId);
         }
 
+        public async Task updateProductQuantityAsync(CartItem item)
+        {
+            _context.CartItems.Update(item);
+            await SaveChangesAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }
